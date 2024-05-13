@@ -11,8 +11,7 @@ echo "DNS_SERVER: ${DNS_SERVER}"
 echo "ZONE: ${CLOUDFLARE_ZONE}"
 
 ADD_RECORD_RESULT=$(curl -X POST "https://api.cloudflare.com/client/v4/zones/${CLOUDFLARE_ZONE}/dns_records" \
-     -H "X-Auth-Email: ${CLOUDFLARE_EMAIL}" \
-     -H "X-Auth-Key: ${CLOUDFLARE_KEY}" \
+     -H "Authorization: Bearer ${CLOUDFLARE_KEY}" \
      -H "Content-Type: application/json" \
      --data "{\"type\":\"TXT\",\"name\":\"${CHALLENGE_DOMAIN}\",\"content\":\"${CERTBOT_VALIDATION}\", \"ttl\": 120}" -s | jq -r "[.success, .errors[].message] | @csv")
 
